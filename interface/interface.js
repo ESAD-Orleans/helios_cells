@@ -71,7 +71,7 @@ $(function () {
 				})
 			}else{
 				// display mask
-				//paper.rect(x * GRID_SIZE, y* GRID_SIZE, GRID_SIZE, GRID_SIZE).attr({fill:'#000',opacity:.5});
+				paper.rect(x * GRID_SIZE, y* GRID_SIZE, GRID_SIZE, GRID_SIZE).attr({fill:'#000',opacity:.5});
 			}
 		}
 	}
