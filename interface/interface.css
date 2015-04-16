@@ -13,13 +13,13 @@ html, body {
 
 @-webkit-keyframes blink {
   0% {
-    background: #999; }
+    background: #000; }
   100% {
     background: #333; } }
 
 @keyframes blink {
   0% {
-    background: #999; }
+    background: #000; }
   100% {
     background: #333; } }
 body {
