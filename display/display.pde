@@ -70,6 +70,25 @@ void Display() {
       }
     }
   }
+if (keyPressed) {
+  switch(key) {
+    case 's' :
+    int d = day();    
+      int m = month();  
+      int y = year();     
+      int h = hour();  
+      int min = minute();  
+    
+  JSONArray jsonPositionsSomme = new JSONArray();
+     int n=0;
+      for (PositionSomme ps : positionsSomme) {
+        jsonPositionsSomme.setJSONObject(n, ps.getJSON());
+        n++;
+      }
+      saveJSONArray(jsonPositionsSomme, "data/positionsomme" + d + "-" + m + "-" + y + "-" + "à" + "-" + h + "h"+ min + "min" + ".json");
+      break;
+    }
+  }
 }
 
 void CleanDisplay(){
@@ -119,7 +138,9 @@ void CaluclePositionSommes() {
       p1.dejaAdditionne = true;
     }
   }
-
+  
   //
 }
 
+
+      
