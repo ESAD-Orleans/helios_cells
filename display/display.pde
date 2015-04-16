@@ -120,6 +120,70 @@ void CaluclePositionSommes() {
     }
   }
 
-  //
+
+ /* //
+  class PositionSomme {
+  int x=0;
+  int y=0;
+  ArrayList<Position> positions = new ArrayList<Position> ();
+
+
+  PositionSomme (Position p) {  
+    positions.add(p);
+    x=p.x;
+    y=p.y;
+  }
+  Boolean userExist(Position p) {
+    for (Position pTest : positions) {
+      if (p.user==pTest.user) {
+        return true;
+      }
+    }
+    return false;
+  }
+  void ajoutePosition(Position p) {
+    positions.add(p);
+  }
+
+  JSONObject getJSON() {
+
+    JSONObject json = new JSONObject();
+    json.setInt("x", x);
+    json.setInt("y", y);
+    json.setInt("z", positions.size());
+    return json;
+  }
 }
+  
+   if (keyPressed) {
+    switch(key) {
+
+    case 's' : 
+      // enregistre les JSON
+
+      // positons
+      JSONArray jsonPositions = new JSONArray();
+      int n=0;
+      for (Position p : positions) {
+        jsonPositions.setJSONObject(n, p.getJSON());
+        n++;
+      }
+      saveJSONArray(jsonPositions, "data/positions.json");
+      
+      // croisements Somme
+      JSONArray jsonPositionsSomme = new JSONArray();
+      n=0;
+      for (PositionSomme ps : positionsSomme) {
+        jsonPositionsSomme.setJSONObject(n, ps.getJSON());
+        n++;
+      }
+      saveJSONArray(jsonPositionsSomme, "data/positionsSomme.json");
+      
+      break;
+
+    
+    }
+  }*/
+}
+
 
