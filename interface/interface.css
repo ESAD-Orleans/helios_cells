@@ -28,7 +28,7 @@ body {
   body.open {
     -webkit-transition: background 1s;
             transition: background 1s;
-    background: #fff;
+    background: #000;
     -webkit-animation: none;
             animation: none; }
 
