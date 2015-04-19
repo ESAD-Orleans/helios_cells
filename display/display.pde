@@ -1,5 +1,12 @@
 
 boolean displayChange = true;
+boolean drapeau;
+
+int d = day();    
+int m = month();  
+int y = year();     
+int h = hour();  
+int min = minute();
 
 int GRID_SIZE = 5;
 int GRID_X = 160;
@@ -11,12 +18,18 @@ ArrayList<Position> positions = new ArrayList<Position>();
 ArrayList<PositionSomme> positionsSomme = new ArrayList<PositionSomme>();
 
 Spacebrew sb;
+boolean sketchFullScreen() {
+  return true;
+}
 
 void setup() {
 
-  size(800, 700, P3D);
+ 
+ size(displayWidth, displayHeight, P3D);
   background(255);
   masque = loadImage("../plan4.png");
+  
+  drapeau = false;
 
   setupSpacebrew();
 }
@@ -53,7 +66,7 @@ void Display() {
    rect(ps.x*GRID_SIZE, ps.y*GRID_SIZE, GRID_SIZE, GRID_SIZE);
    }*/
 
-  camera    (GRID_SIZE*GRID_X/2, GRID_SIZE*GRID_Y, 400, 
+  camera    (GRID_SIZE*GRID_X/2, GRID_SIZE*GRID_Y+50, 450, 
   GRID_SIZE*GRID_X/2, GRID_SIZE*GRID_Y/2, 0, 
   0.0, 1, 1.0);
   for (int i=0; i<=GRID_X; i++) {
@@ -70,24 +83,19 @@ void Display() {
       }
     }
   }
-if (keyPressed) {
-  switch(key) {
-    case 's' :
-    int d = day();    
-      int m = month();  
-      int y = year();     
-      int h = hour();  
-      int min = minute();  
-    
-  JSONArray jsonPositionsSomme = new JSONArray();
-     int n=0;
+ if (minute() == 0) {
+    if (!drapeau) {
+      JSONArray jsonPositionsSomme = new JSONArray();
+      int n=0;
       for (PositionSomme ps : positionsSomme) {
         jsonPositionsSomme.setJSONObject(n, ps.getJSON());
         n++;
       }
       saveJSONArray(jsonPositionsSomme, "data/positionsomme" + d + "-" + m + "-" + y + "-" + "à" + "-" + h + "h"+ min + "min" + ".json");
-      break;
+      drapeau = true;
     }
+  } else {
+    drapeau = false;
   }
 }
 
