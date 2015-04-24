@@ -1,5 +1,5 @@
 {
-	"SERVER":"localhost",
+	"SERVER":"192.168.100.229",
 	"PORT": 9000,
 	"CLIENT_NAME":"interface",
 	"CLIENT_DESCRIPTION": "send touch position",

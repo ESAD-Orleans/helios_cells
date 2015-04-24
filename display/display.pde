@@ -2,11 +2,7 @@
 boolean displayChange = true;
 boolean drapeau;
 
-int d = day();    
-int m = month();  
-int y = year();     
-int h = hour();  
-int min = minute();
+
 
 int GRID_SIZE = 5;
 int GRID_X = 160;
@@ -53,6 +49,27 @@ void keyPressed() {
 }
 
 void draw() {
+  int d = day();    
+int m = month();  
+int y = year();     
+int h = hour();  
+int min = minute();
+
+ if (minute() == 0) {
+    if (!drapeau) {
+      JSONArray jsonPositionsSomme = new JSONArray();
+      int n=0;
+      for (PositionSomme ps : positionsSomme) {
+        jsonPositionsSomme.setJSONObject(n, ps.getJSON());
+        n++;
+      }
+      saveJSONArray(jsonPositionsSomme, "data/positionsomme" + d + "-" + m + "-" + y + "-" + "à" + "-" + h + "h"+ min + "min" + ".json");
+      drapeau = true;
+    }
+  } else {
+    drapeau = false;
+  }
+
   if(displayChange){
     Display();
   }
@@ -83,20 +100,7 @@ void Display() {
       }
     }
   }
- if (minute() == 0) {
-    if (!drapeau) {
-      JSONArray jsonPositionsSomme = new JSONArray();
-      int n=0;
-      for (PositionSomme ps : positionsSomme) {
-        jsonPositionsSomme.setJSONObject(n, ps.getJSON());
-        n++;
-      }
-      saveJSONArray(jsonPositionsSomme, "data/positionsomme" + d + "-" + m + "-" + y + "-" + "à" + "-" + h + "h"+ min + "min" + ".json");
-      drapeau = true;
-    }
-  } else {
-    drapeau = false;
-  }
+
 }
 
 void CleanDisplay(){
