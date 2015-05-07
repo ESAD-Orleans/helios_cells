@@ -21,7 +21,7 @@ html, body {
 }
 
 body {
-  animation: blink .8s infinite alternate-reverse;
+  //animation: blink .8s infinite alternate-reverse;
   &.open {
     transition: background 1s;
     background: #fff;
