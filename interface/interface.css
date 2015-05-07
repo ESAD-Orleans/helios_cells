@@ -23,7 +23,7 @@ html, body {
   100% {
     background: #333; } }
 body {
-  background: #888; }
+  background: #000; }
   body.open {
     -webkit-transition: background 1s;
             transition: background 1s;
