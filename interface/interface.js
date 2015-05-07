@@ -18,6 +18,9 @@ $(function () {
 		DATE_OFFSET = 0, // date offset (to prevent long int problems)
 		SESSION_ID = Date.now(); // default spacebrew port is 9000
 
+	//
+	var storageSERVER = localStorage.getItem("SERVER");
+	//
 	// setup new Spacebrew client
 	function SetupSpacebrew(){
 		$('body').removeClass('open');
@@ -234,6 +237,7 @@ $(function () {
 	$('form.server').submit(function(){
 		CloseModal();
 		sbConfig.SERVER = $('#SERVER').val();
+		localStorage.setItem('SERVER', sbConfig.SERVER);
 		SetupSpacebrew();
 		return false;
 	});
@@ -254,6 +258,10 @@ $(function () {
 		ComputeMask();
 		//
 		sbConfig = data;
+		if(!_.isNull(storageSERVER)){
+			console.log('storage', storageSERVER);
+			sbConfig.SERVER = storageSERVER;
+		}
 		DATE_OFFSET = (new Date(sbConfig.DATE_OFFSET)).getTime();
 		SetupSpacebrew();
 	});
