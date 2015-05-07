@@ -21,10 +21,11 @@ html, body {
 }
 
 body {
+  background: #888;
   //animation: blink .8s infinite alternate-reverse;
   &.open {
     transition: background 1s;
-    background: #fff;
+    background: #000;
     animation: none;
   }
 }
