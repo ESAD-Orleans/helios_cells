@@ -11,26 +11,15 @@ html, body {
   position: relative;
   overflow: hidden; }
 
-@-webkit-keyframes blink {
-  0% {
-    background: #999; }
-  100% {
-    background: #999; } }
-
 @keyframes blink {
   0% {
     background: #999; }
   100% {
-    background: #999; } }
-body {
-  -webkit-animation: blink .8s infinite alternate-reverse;
-          animation: blink .8s infinite alternate-reverse; }
-  body.open {
-    -webkit-transition: background 1s;
-            transition: background 1s;
-    background: #fff;
-    -webkit-animation: none;
-            animation: none; }
+    background: #333; } }
+body.open {
+  transition: background 1s;
+  background: #fff;
+  animation: none; }
 
 #map {
   position: absolute;
@@ -84,4 +73,5 @@ button, input {
 
 .mask {
   display: none; }
+
 /*# sourceMappingURL=interface.css.map */

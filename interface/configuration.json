@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
 	"SERVER":"localhost",
+=======
+	"SERVER":"192.168.100.229",
+>>>>>>> gh-pages
 	"PORT": 9000,
 	"CLIENT_NAME":"interface",
 	"CLIENT_DESCRIPTION": "send touch position",
