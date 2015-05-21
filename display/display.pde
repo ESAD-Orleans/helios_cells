@@ -6,6 +6,9 @@ boolean displayChange = true;
 		int GRID_SIZE = 5;
 		int GRID_X = 160;
 		int GRID_Y = 140;
+		
+		int CAMERA_Y = 0;
+		int CAMERA_Z = -250;
 
 		PImage masque;
 
@@ -38,6 +41,20 @@ boolean displayChange = true;
 
 		void keyPressed() {
 		switch(keyCode) {
+		
+  case 37 : // <- 
+  CAMERA_Y +=10;
+  break;  
+  case 38 : // UP 
+  CAMERA_Z +=10;
+  break;  
+  case 39 : // -> 
+  CAMERA_Y -=10;
+  break;  
+  case 40 : // DOWN 
+  CAMERA_Z -=10;
+  break; 
+		
 		case 67 : // C -> CLEAN
 		CleanInterface();
 		CleanDisplay();
@@ -82,16 +99,19 @@ boolean displayChange = true;
 		rect(ps.x*GRID_SIZE, ps.y*GRID_SIZE, GRID_SIZE, GRID_SIZE);
 		}*/
 
-		camera    (GRID_SIZE*GRID_X/2, GRID_SIZE*GRID_Y+50, 450,
-		GRID_SIZE*GRID_X/2, GRID_SIZE*GRID_Y/2, 0,
-		0.0, 1, 1.0);
+		camera    (
+			0, CAMERA_Y, CAMERA_Z,
+			0, 0, 0,
+			0.0, 1, 1.0
+		);
 		for (int i=0; i<=GRID_X; i++) {
 		for (int j=0; j<=GRID_Y; j++) {
 		if (isNotMask (i, j)) {
 		for (int z=0; z<=5; z++) {
 		for  (int Niveau=0 ; Niveau<4-PositionIteration(i, j); Niveau++) {
 		pushMatrix();
-		translate(i*GRID_SIZE, j*GRID_SIZE, Niveau*GRID_SIZE);
+		// ici la valeur /1.6 décentre un peu (la valeur réelement centrale est /2)
+            	translate(i*GRID_SIZE-GRID_SIZE*GRID_X/2, j*GRID_SIZE-GRID_SIZE*GRID_Y/1.6, Niveau*GRID_SIZE);
 		box(GRID_SIZE);
 		popMatrix();
 		}
