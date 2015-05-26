@@ -76,10 +76,10 @@ $(document).ready(function () {
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.bottom = '0px';
 		stats.domElement.style.zIndex = 100;
-		container.appendChild(stats.domElement);
+		//container.appendChild(stats.domElement);
 		// LIGHT
 		var light = new THREE.PointLight(0xffffff);
-		light.position.set(0, 250, 0);
+		light.position.set(0, GRID_SIZE*7, 0);
 		scene.add(light);
 		// FLOOR
 		var floorTexture = new THREE.ImageUtils.loadTexture('checkerboard.jpg');
@@ -90,7 +90,7 @@ $(document).ready(function () {
 		var floor = new THREE.Mesh(floorGeometry, floorMaterial);
 		floor.position.y = 0;
 		floor.rotation.x = Math.PI / 2;
-		scene.add(floor);
+		//scene.add(floor);
 		// SKYBOX/FOG
 		var skyBoxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
 		var skyBoxMaterial = new THREE.MeshBasicMaterial({color: 0x9999ff, side: THREE.BackSide});
