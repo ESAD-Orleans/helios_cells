@@ -21,6 +21,7 @@ $(document).ready(function () {
 
 	// maskData
 	var MASK_THRESHOLD = 1,
+		maskImage,
 		maskData = _([]);
 
 	function validMask(x, y) {
@@ -29,8 +30,7 @@ $(document).ready(function () {
 
 	function init() {
 
-		var maskImage = $('img.mask').get(0),
-			maskCanvas = $('canvas.mask').get(0),
+		var	maskCanvas = $('canvas.mask').get(0),
 			maskContext = maskCanvas.getContext('2d');
 		maskContext.drawImage(maskImage, 0, 0, maskImage.width, maskImage.height);
 		var pixels = maskContext.getImageData(0, 0, maskImage.width, maskImage.height);
@@ -54,7 +54,6 @@ $(document).ready(function () {
 		// CAMERA
 		var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
 		var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
-		console.log(ASPECT);
 		camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
 		scene.add(camera);
 		camera.position.set(0, 150, 400);
@@ -126,6 +125,7 @@ $(document).ready(function () {
 					if (h > 5) {
 						h = 5;
 					}
+					h = 5-h;
 					for (var z = 0; z < h; z++) {
 						cube = new THREE.Mesh(cubeGeo);
 						cube.material = squareMaterial;
@@ -145,6 +145,7 @@ $(document).ready(function () {
 
 	function animate() {
 
+		/*
 		var d = clock.getElapsedTime()/10,
 			d1 = d+1;
 
@@ -165,15 +166,20 @@ $(document).ready(function () {
 		camera.lookAt(target);
 		console.log(target.x);
 
-		/*if(cameras){
+		/*/
+
+		if(cameras){
+		 //*/
 			var d = clock.getElapsedTime(),
-				n = ( d* CAMERA_SPEED)% 1,
+				//n = ( d* CAMERA_SPEED)% 1,
 				n0 = Math.round(d * CAMERA_SPEED) % cameras.length,
 				n1 = Math.round((d+1) * CAMERA_SPEED) % cameras.length,
 				p0 = cameras[n0],
 				p1 = cameras[n1];
 
 
+
+			/*
 			camera.position.x = p0.x;
 			camera.position.z = p0.y;
 			camera.position.y = 5.6 * GRID_SIZE;
@@ -182,18 +188,19 @@ $(document).ready(function () {
 			CAMERA_TARGET.z = p1.y;
 			CAMERA_TARGET.y = 5.4 * GRID_SIZE;
 
-			/*
+			/*/
 			camera.position.x = p0.x*.01 + camera.position.x*.99;
 			camera.position.z = p0.y * .01 + camera.position.z * .99;
-			camera.position.y = 5.6*GRID_SIZE;
+			camera.position.y = 4.3*GRID_SIZE;
 
-			CAMERA_TARGET.x = p1.x * .001 + CAMERA_TARGET.x * .999;
-			CAMERA_TARGET.z = p1.y * .001 + CAMERA_TARGET.z * .999;
-			CAMERA_TARGET.y = 5.4*GRID_SIZE;
-			*/
+			CAMERA_TARGET.x = p1.x * .01 + CAMERA_TARGET.x * .99;
+			CAMERA_TARGET.z = p1.y * .01 + CAMERA_TARGET.z * .99;
+			CAMERA_TARGET.y = 4*GRID_SIZE;
+			//*/
 
 			//camera.lookAt(CAMERA_TARGET);
-		//}
+		//
+		}
 		requestAnimationFrame(animate);
 		render();
 		update();
@@ -208,26 +215,39 @@ $(document).ready(function () {
 		renderer.render(scene, camera);
 	}
 
-	var historiqueAjax = $.ajax({
-		url:'historique.json',
-		datatype:'json',
-		success: function (data) {
-			historique = data;
-		}
-	});
-	var camerasAjax = $.ajax({
-		url: 'cameras.json',
-		datatype: 'json',
-		success: function (data) {
-			cameras = data;
-		}
-	});
-	$.when(historiqueAjax, camerasAjax).done(function(){
-		setupCubes();
-	});
 
-	init();
-	animate();
+
+	maskImage = new Image();
+	$(maskImage).on('load',function(){
+
+		console.log("maskImage loaded");
+		var historiqueAjax = $.ajax({
+			url: 'historique.json',
+			datatype: 'json',
+			success: function (data) {
+				console.log("historique loaded");
+				historique = data;
+			}
+		});
+		var camerasAjax = $.ajax({
+			url: 'cameras.json',
+			datatype: 'json',
+			success: function (data) {
+				console.log("cameras loaded");
+				cameras = data;
+			}
+		});
+
+		$.when(historiqueAjax, camerasAjax).done(function () {
+			setupCubes();
+		});
+
+		init();
+		animate();
+	});
+	maskImage.src = "masque.png";
+
+
 
 
 });
