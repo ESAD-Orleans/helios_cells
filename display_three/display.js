@@ -170,7 +170,8 @@ $(document).ready(function () {
 
 		if(cameras){
 		 //*/
-			var d = clock.getElapsedTime(),
+			//camera speed
+			var d = clock.getElapsedTime()*4,
 				//n = ( d* CAMERA_SPEED)% 1,
 				n0 = Math.round(d * CAMERA_SPEED) % cameras.length,
 				n1 = Math.round((d+1) * CAMERA_SPEED) % cameras.length,
