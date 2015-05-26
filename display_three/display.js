@@ -2,8 +2,11 @@ $(document).ready(function () {
 
 	// standard global variables
 	var container, scene, camera, renderer, controls, stats;
-	var keyboard = new THREEx.KeyboardState();
 	var clock = new THREE.Clock();
+
+	var historique, cameras,
+	CAMERA_SPEED = 2,
+	CAMERA_TARGET = new THREE.Vector3();
 
 	// custom global variables
 	var cube;
@@ -104,40 +107,99 @@ $(document).ready(function () {
 		squareTexture = new THREE.ImageUtils.loadTexture("square-thick.png");
 		squareMaterial = new THREE.MeshBasicMaterial({map: squareTexture, color: 0xffffff});
 
-		for(var x=0; x<GRID_X; x++){
-			for(var y=0; y<GRID_Y; y++) {
-				if(validMask(x,y)) {
-					var h = Math.ceil(Math.random() * 5);
-					for(var z=0; z<h; z++){
+	}
+
+	function setupCubes(){
+		clock = new THREE.Clock();
+		//camera.position.x = cameras[0].x;
+		//camera.position.z = cameras[0].y;
+
+		for (var x = 0; x < GRID_X; x++) {
+			for (var y = 0; y < GRID_Y; y++) {
+				if (validMask(x, y)) {
+					var h = _(historique).find({x: x, y: y});//Math.ceil(Math.random() * 5);
+					if (_.isUndefined(h)) {
+						h = 0;
+					} else {
+						h = h.z;
+					}
+					if (h > 5) {
+						h = 5;
+					}
+					for (var z = 0; z < h; z++) {
 						cube = new THREE.Mesh(cubeGeo);
 						cube.material = squareMaterial;
 						// TODO
-						cube.position.x = x * GRID_SIZE - GRID_SIZE * GRID_X / 2 -GRID_SIZE/2;
-						cube.position.z = y * GRID_SIZE - GRID_SIZE * GRID_Y / 2 -GRID_SIZE/2;
-						cube.position.y = GRID_SIZE *z+GRID_SIZE/2;
+						cube.position.x = x * GRID_SIZE - GRID_SIZE * GRID_X / 2 - GRID_SIZE / 2;
+						cube.position.z = y * GRID_SIZE - GRID_SIZE * GRID_Y / 2 - GRID_SIZE / 2;
+						cube.position.y = GRID_SIZE * z + GRID_SIZE / 2;
 						cube.scale = {x: GRID_SIZE, y: GRID_SIZE, z: GRID_SIZE};
-						cube.name = "cube_" + x + "_" + y+ "_"+z;
+						cube.name = "cube_" + x + "_" + y + "_" + z;
 						scene.add(cube);
 					}
 
 				}
 			}
 		}
-
-		animate();
 	}
 
 	function animate() {
+
+		var d = clock.getElapsedTime()/10,
+			d1 = d+1;
+
+		var target = new THREE.Vector3(
+			(Math.cos(d*Math.PI)*GRID_X/4)*GRID_SIZE,
+			5,
+			(Math.sin(d * Math.PI) * GRID_Y / 4) * GRID_SIZE
+		);
+
+		var eye = new THREE.Vector3(
+			(Math.cos(d1 * Math.PI) * GRID_X / 2) * GRID_SIZE,
+			((Math.cos(d * Math.PI)+1) *.5 * 20 + 10 )* GRID_SIZE,
+			(Math.sin(d1 * Math.PI) * GRID_Y / 2) * GRID_SIZE
+		);
+		camera.position.x = eye.x;
+		camera.position.z = eye.z;
+		camera.position.y = eye.y;
+		camera.lookAt(target);
+		console.log(target.x);
+
+		/*if(cameras){
+			var d = clock.getElapsedTime(),
+				n = ( d* CAMERA_SPEED)% 1,
+				n0 = Math.round(d * CAMERA_SPEED) % cameras.length,
+				n1 = Math.round((d+1) * CAMERA_SPEED) % cameras.length,
+				p0 = cameras[n0],
+				p1 = cameras[n1];
+
+
+			camera.position.x = p0.x;
+			camera.position.z = p0.y;
+			camera.position.y = 5.6 * GRID_SIZE;
+
+			CAMERA_TARGET.x = p1.x;
+			CAMERA_TARGET.z = p1.y;
+			CAMERA_TARGET.y = 5.4 * GRID_SIZE;
+
+			/*
+			camera.position.x = p0.x*.01 + camera.position.x*.99;
+			camera.position.z = p0.y * .01 + camera.position.z * .99;
+			camera.position.y = 5.6*GRID_SIZE;
+
+			CAMERA_TARGET.x = p1.x * .001 + CAMERA_TARGET.x * .999;
+			CAMERA_TARGET.z = p1.y * .001 + CAMERA_TARGET.z * .999;
+			CAMERA_TARGET.y = 5.4*GRID_SIZE;
+			*/
+
+			//camera.lookAt(CAMERA_TARGET);
+		//}
 		requestAnimationFrame(animate);
 		render();
 		update();
 	}
 
 	function update() {
-		if (keyboard.pressed("z")) {
-			// do something
-		}
-
 		controls.update();
 		stats.update();
 	}
@@ -146,6 +208,26 @@ $(document).ready(function () {
 		renderer.render(scene, camera);
 	}
 
-	init();
+	var historiqueAjax = $.ajax({
+		url:'historique.json',
+		datatype:'json',
+		success: function (data) {
+			historique = data;
+		}
+	});
+	var camerasAjax = $.ajax({
+		url: 'cameras.json',
+		datatype: 'json',
+		success: function (data) {
+			cameras = data;
+		}
+	});
+	$.when(historiqueAjax, camerasAjax).done(function(){
+		setupCubes();
+	});
 
-})
+	init();
+	animate();
+
+
+});
