@@ -196,7 +196,7 @@ $(document).ready(function () {
 
 			CAMERA_TARGET.x = p1.x * .01 + CAMERA_TARGET.x * .99;
 			CAMERA_TARGET.z = p1.y * .01 + CAMERA_TARGET.z * .99;
-			CAMERA_TARGET.y = 15*GRID_SIZE;
+			CAMERA_TARGET.y = 40*GRID_SIZE;
 			//*/
 
 			//camera.lookAt(CAMERA_TARGET);
