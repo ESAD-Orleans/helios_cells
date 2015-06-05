@@ -192,11 +192,11 @@ $(document).ready(function () {
 			/*/
 			camera.position.x = p0.x*.01 + camera.position.x*.99;
 			camera.position.z = p0.y * .01 + camera.position.z * .99;
-			camera.position.y = 4.3*GRID_SIZE;
+			camera.position.y = 3.7*GRID_SIZE;
 
 			CAMERA_TARGET.x = p1.x * .01 + CAMERA_TARGET.x * .99;
 			CAMERA_TARGET.z = p1.y * .01 + CAMERA_TARGET.z * .99;
-			CAMERA_TARGET.y = 5*GRID_SIZE;
+			CAMERA_TARGET.y = 4*GRID_SIZE;
 			//*/
 
 			camera.lookAt(CAMERA_TARGET);
