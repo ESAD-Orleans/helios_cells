@@ -190,8 +190,8 @@ $(document).ready(function () {
 			CAMERA_TARGET.y = 5.4 * GRID_SIZE;
 
 			/*/
-			camera.position.x = p0.x*.01 *5 + camera.position.x*.99;
-			camera.position.z = p0.y * .01 *5 + camera.position.z * .99;
+			camera.position.x = p0.x*.01  + camera.position.x*.99;
+			camera.position.z = p0.y * .01  + camera.position.z * .99;
 			camera.position.y = 4.2*GRID_SIZE;
 
 			CAMERA_TARGET.x = p1.x * .01 + CAMERA_TARGET.x * .99;
