@@ -171,7 +171,7 @@ $(document).ready(function () {
 		if(cameras){
 		 //*/
 			//camera speed
-			var d = clock.getElapsedTime()*2,
+			var d = clock.getElapsedTime()*0.1,
 				//n = ( d* CAMERA_SPEED)% 1,
 				n0 = Math.round(d * CAMERA_SPEED) % cameras.length,
 				n1 = Math.round((d+1) * CAMERA_SPEED) % cameras.length,
