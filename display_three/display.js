@@ -199,7 +199,7 @@ $(document).ready(function () {
 			CAMERA_TARGET.y = 4.2*GRID_SIZE;
 			//*/
 
-			camera.lookAt(CAMERA_TARGET);
+			//camera.lookAt(CAMERA_TARGET);
 		//
 		}
 		requestAnimationFrame(animate);
